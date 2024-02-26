@@ -25,6 +25,10 @@
         </div>
         <div class="add-game">
             <h3><a href="/Gamespace/pages/addGame.jsp">Dodajte igru</a></h3>
+            <h3><a href="/Gamespace/izvestaj/getStudios">Pronadjite igrice po odredjenom studiju</a></h3>
+            <sec:authorize access="hasRole('ADMIN')">
+            	<h3><a href="/Gamespace/user/admin">Brisanje korisnika</a></h3>
+            </sec:authorize>
         </div>
         <table class="game-table">
             <tr>

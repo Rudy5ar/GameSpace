@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,28 @@ public class UserService {
 		User user = ur.findByUsername(username);
 		return user;
 	}
+
+	public List<User> getAllUsers() {
+		return ur.findAll();
+	}
+
+	public boolean deleteUser(int userId) {
+        User user = ur.findById(userId).get();
+
+		if (user != null) {
+			user.getUserGames().forEach(userGame -> userGame.setUser(null));
+            user.getUserGames().clear();
+			user.getComments().forEach(comment -> comment.setUser(null));
+            user.getComments().clear();
+			
+			ur.deleteById(userId);
+	        if(ur.findById(userId).isPresent() == false) {
+	        	// Brisanje uspesno
+	        	return true;
+	        }
+		}
+        return false;
+    }
 	
 	
 }
