@@ -63,8 +63,6 @@ public class GameService {
 
 	public void ukloniOmiljenu(int userId, int gameId) {
 		UserGame ug = ugr.findByUser_UserIdAndGame_GameId(userId, gameId);
-		System.out.println("sestra moja");
-		System.out.println(ug);
 		ugr.delete(ug);
 	}
 	
