@@ -30,11 +30,12 @@ public class StudioService {
 	}
 
 	public JasperPrint kreirajIzvestaj(Integer idStudio) throws JRException, IOException {
-		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(sr.findById(idStudio).get().getGames());
+		Studio studio = sr.findById(idStudio).get();
+		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(studio.getGames());
 		InputStream inputStream = this.getClass().getResourceAsStream("/jasperreports/studioReport.jrxml");
 		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("imeStudia", sr.findById(idStudio).get().getName());
+		params.put("imeStudia", studio.getName());
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, dataSource);
 		inputStream.close();
 		return jasperPrint;

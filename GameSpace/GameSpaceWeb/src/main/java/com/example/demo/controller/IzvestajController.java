@@ -4,7 +4,6 @@ import java.io.OutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,17 +24,16 @@ public class IzvestajController {
 	StudioService ss;
 	
 	@GetMapping("/getStudios")
-	public String getStudios(HttpServletRequest request, Model m) {
+	public String getStudios(HttpServletRequest request) {
 		request.getSession().setAttribute("studios", ss.allStudios());
 		return "pages/izvestaj";
 	}
 	
 	
 	@PostMapping("/createReport")
-	public String addUser(@RequestParam("studio") Integer idStudio, HttpServletResponse response, Model m) {
+	public String createReport(@RequestParam("studio") Integer idStudio, HttpServletResponse response) {
 		try {
 			JasperPrint jasperReport = ss.kreirajIzvestaj(idStudio);
-			response.setContentType("text/html");
 			response.setContentType("application/x-download");
 			response.addHeader("Content-disposition", "attachment; filename=studioIgrice.pdf");
 			OutputStream out = response.getOutputStream();

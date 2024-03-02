@@ -39,8 +39,7 @@ public class UserController {
 	
 	@PostMapping("/removeUser")
     public String removeUser(@RequestParam("userId") int userId, Model m) {
-        boolean s = us.deleteUser(userId);
-        if(s == true) {
+        if(us.deleteUser(userId)) {
 			m.addAttribute("deleteUspeh", "success");
 		}
 		else {

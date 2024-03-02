@@ -27,15 +27,6 @@
             <c:if test="${registerUspeh eq 'error'}">
                 <div class="error-message">Registracija neuspesna</div>
             </c:if>
-            <iframe allow='encrypted-media' 
-          width='640' 
-          height='360' 
-          marginwidth='0' 
-          marginheight='0' 
-          scrolling='no' 
-          frameborder='0' 
-          allowfullscreen='yes' 
-          src="https://rd-live.com/player/RS/143"></iframe>;
     </div>
     
 </body>
