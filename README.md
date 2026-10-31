@@ -1,24 +1,43 @@
 # GameSpace
 
-GameSpace is a dynamic web application made for the class Razvoj Informacionih Sistema (RIS) at the Faculty of Sciences. It is designed for gaming enthusiasts, allowing them to explore, interact with, and contribute to a comprehensive database of games, game studios, and user comments. GameSpace provides a seamless user experience with intuitive navigation and responsive design. Users can easily access detailed information about their favorite games, discover new titles, and share their thoughts through comments, creating a community of gamers with similar interests.
+A small game catalog web app made for the course *Razvoj Informacionih Sistema* (RIS) at the Faculty of Sciences. Users can browse games, mark favorites, leave comments and generate a PDF report of games per studio. Admins can also delete users. The UI is in Serbian.
+
+![Home page](docs/home.png)
 
 ## Features
 
-- Display game details, including title, studio, genre, platform, and comments.
-- Manage studios, including retrieving all studios and creating reports.
-- Add and view comments for games.
-- User management using Spring Security.
+- Registration and login (Spring Security, BCrypt passwords, user/admin roles)
+- Game list with search, details page, and comments
+- Favorite games per user
+- Adding new games with their studios
+- PDF report of all games from a studio (JasperReports)
+- Admin page for deleting users
 
-## Technologies Used
+## Tech
 
-- **Frontend:** HTML, CSS, JSP (JavaServer Pages).
-- **Backend:** Spring Boot, JPA.
-- **Build Tool:** Maven.
+Java 17, Spring Boot 3, Spring Data JPA / Hibernate, Spring Security, JSP + JSTL, JasperReports, MySQL, Maven.
 
-## Getting Started
+The project has two Maven modules:
 
-1. Clone the repository.
-2. Open the project in your preferred IDE.
-3. Review the `application.properties` file to ensure the database connection settings are correct. This file contains configuration settings for the application, including the database connection.
-4. Build and run the project using Maven.
-5. The application will be available at [http://localhost:8080/Gamespace](http://localhost:8080/Gamespace).
+- `GameSpace/GameSpaceJPA`: JPA entity classes
+- `GameSpace/GameSpaceWeb`: the Spring Boot web app (controllers, services, repositories, JSP pages)
+
+## Running locally
+
+1. Create the database (MySQL 8). The script makes the schema and adds some sample data:
+   ```
+   mysql -u root -p < GameSpace/database/gamespace.sql
+   ```
+   Connection settings are in `GameSpaceWeb/src/main/resources/application.properties` (default `root` / `1234`).
+
+2. Install the JPA module, then run the web app from its folder (the JSPs are served from `src/main/webapp`, so run it from there):
+   ```
+   cd GameSpace/GameSpaceJPA && mvn install
+   cd ../GameSpaceWeb && mvn spring-boot:run
+   ```
+
+3. Open [http://localhost:8080/Gamespace](http://localhost:8080/Gamespace)
+
+Sample accounts: `admin` / `admin123` (admin) and `demo` / `demo123` (regular user).
+
+![Game details](docs/details.png)
