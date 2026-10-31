@@ -1,43 +1,28 @@
 # GameSpace
 
-A small game catalog web app made for the course *Razvoj Informacionih Sistema* (RIS) at the Faculty of Sciences. Users can browse games, mark favorites, leave comments and generate a PDF report of games per studio. Admins can also delete users. The UI is in Serbian.
+Project for the RIS (Razvoj Informacionih Sistema) course at the Faculty of Sciences. It's a web app where you can browse games, comment on them and save your favorites. You can also add new games and print a PDF report of all games from a studio. Admins can delete users. The UI is in Serbian.
+
+Made with Spring Boot, Spring Security, JPA, JSP and JasperReports, with a MySQL database. The entities are in a separate Maven project (GameSpaceJPA) and the actual app is in GameSpaceWeb.
 
 ![Home page](docs/home.png)
 
-## Features
+## How to run
 
-- Registration and login (Spring Security, BCrypt passwords, user/admin roles)
-- Game list with search, details page, and comments
-- Favorite games per user
-- Adding new games with their studios
-- PDF report of all games from a studio (JasperReports)
-- Admin page for deleting users
+You need Java 17, Maven and MySQL. First import the database, it has some sample data in it:
 
-## Tech
+```
+mysql -u root -p < GameSpace/database/gamespace.sql
+```
 
-Java 17, Spring Boot 3, Spring Data JPA / Hibernate, Spring Security, JSP + JSTL, JasperReports, MySQL, Maven.
+The DB login is set in `GameSpaceWeb/src/main/resources/application.properties` (root / 1234), so change it there if yours is different.
 
-The project has two Maven modules:
+Then install the JPA project and start the web app. Run it from the GameSpaceWeb folder, otherwise the JSP pages won't load:
 
-- `GameSpace/GameSpaceJPA`: JPA entity classes
-- `GameSpace/GameSpaceWeb`: the Spring Boot web app (controllers, services, repositories, JSP pages)
+```
+cd GameSpace/GameSpaceJPA && mvn install
+cd ../GameSpaceWeb && mvn spring-boot:run
+```
 
-## Running locally
-
-1. Create the database (MySQL 8). The script makes the schema and adds some sample data:
-   ```
-   mysql -u root -p < GameSpace/database/gamespace.sql
-   ```
-   Connection settings are in `GameSpaceWeb/src/main/resources/application.properties` (default `root` / `1234`).
-
-2. Install the JPA module, then run the web app from its folder (the JSPs are served from `src/main/webapp`, so run it from there):
-   ```
-   cd GameSpace/GameSpaceJPA && mvn install
-   cd ../GameSpaceWeb && mvn spring-boot:run
-   ```
-
-3. Open [http://localhost:8080/Gamespace](http://localhost:8080/Gamespace)
-
-Sample accounts: `admin` / `admin123` (admin) and `demo` / `demo123` (regular user).
+The app runs on http://localhost:8080/Gamespace. You can log in as admin / admin123 or demo / demo123.
 
 ![Game details](docs/details.png)
